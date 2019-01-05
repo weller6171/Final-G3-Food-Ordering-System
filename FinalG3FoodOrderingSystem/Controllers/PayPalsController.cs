@@ -6,12 +6,20 @@ using System.Web.Mvc;
 
 namespace FinalG3FoodOrderingSystem.Controllers
 {
-    public class HomeController : Controller
+    public class PayPalsController : Controller
     {
+        // GET: PayPals
         public ActionResult Index()
         {
             return View();
         }
+
         
+
+
+
+
+
+
     }
 }

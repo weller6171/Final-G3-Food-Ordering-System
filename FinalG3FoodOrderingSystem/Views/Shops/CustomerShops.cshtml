@@ -1,0 +1,42 @@
+﻿@model IEnumerable<FinalG3FoodOrderingSystem.Models.Shop>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.ShopName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ShopOwner)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ShopAddress)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.ShopName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ShopOwner)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ShopAddress)
+        </td>
+        <td>
+            @Html.ActionLink("Visit Shop", "DisplayFoods2","Foods", new { id = item.Id }) |
+            
+        </td>
+    </tr>
+    }
+
+</table>
