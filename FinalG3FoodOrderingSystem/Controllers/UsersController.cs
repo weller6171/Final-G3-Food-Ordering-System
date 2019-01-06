@@ -43,7 +43,7 @@ namespace FinalG3FoodOrderingSystem.Controllers
                     if (userDetails.position == "Shop Owner")
                         return RedirectToAction("ShowShops", "Shops", new { id = userDetails.Id });
                     else if (userDetails.position == "Customer")
-                        return RedirectToAction("DisplayFoods", "Foods");
+                        return RedirectToAction("DisplayFoods", "Foods", new { id = userDetails.Id });
                     else if (userDetails.position == "Delivery Boy")
                         return RedirectToAction("DisplayOrders", "Orders");
                     else
@@ -67,11 +67,20 @@ namespace FinalG3FoodOrderingSystem.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id, password, name, emailAddress, hpno, position")] User user)
         {
-            if (ModelState.IsValid)
+            FoodOrderingSystemDatabaseEntities7 database1Entities = new FoodOrderingSystemDatabaseEntities7();
+            var userDetails = database1Entities.Users.Where(x => x.emailAddress == user.emailAddress).FirstOrDefault();
+            if (userDetails == null)
             {
-                db.Users.Add(user);
-                db.SaveChanges();
-                return RedirectToAction("Login", "Users");
+                if (ModelState.IsValid)
+                {
+                    db.Users.Add(user);
+                    db.SaveChanges();
+                    return RedirectToAction("Login", "Users");
+                }
+            }
+            else
+            {
+                Console.WriteLine("Email-Address already signed up before.");
             }
             return View(user);
         }

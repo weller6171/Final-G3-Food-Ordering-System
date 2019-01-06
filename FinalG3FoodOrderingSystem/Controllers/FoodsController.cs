@@ -26,7 +26,7 @@ namespace FinalG3FoodOrderingSystem.Controllers
                 db.Foods.Where(r => r.ShopId == id).ToList());
         }
 
-        public ViewResult DisplayFoods()
+        public ViewResult DisplayFoods(int id)
         {
             return View(db.Foods.ToList());
         }

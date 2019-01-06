@@ -3,7 +3,9 @@
 @{
     ViewBag.Title = "Food Menu";
 }
-
+@{
+    var id = Request.Url.Segments.Last();
+}
 <h2>Display Food Details</h2>
 
 <table class="table">
@@ -28,9 +30,12 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Price)
             </td>
-         
+
         </tr>
     }
 
 </table>
-<BR> @Html.ActionLink("Place Orders", "Create", "Orders")
+<BR> @Html.ActionLink("Place Orders", "Create", "Orders")<br>
+@Html.ActionLink("Show my orders", "DisplayCustomerOrder","Orders", new { id = id }) |
+
+

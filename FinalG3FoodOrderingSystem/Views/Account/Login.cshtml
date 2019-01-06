@@ -44,20 +44,6 @@
 
                 </div>
 
-
-
-
-
-
-
-
-
-
-                <br><br><br><br>
-
-                <p>
-                    @Html.ActionLink("Register as a new user", "Create", "Users")
-                </p>
                 @* Enable this once you have account confirmation enabled for password reset functionality
             <p>
                 @Html.ActionLink("Forgot your password?", "ForgotPassword")
@@ -68,6 +54,7 @@
     <div class="col-md-4">
         <section id="socialLoginForm">
             @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
+
         </section>
     </div>
 </div>

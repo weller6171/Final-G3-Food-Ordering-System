@@ -156,7 +156,11 @@ namespace FinalG3FoodOrderingSystem.Controllers
             return RedirectToAction("DisplayOrders");
         }
 
-        
+        public ActionResult DisplayCustomerOrder(int id)
+        {
+            return View(db.Orders.Where(r => r.CustomerId == id).ToList());
+
+        }
 
         public ViewResult DisplayOrders()
         {

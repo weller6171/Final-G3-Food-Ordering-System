@@ -208,7 +208,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\OrdersController.cs" />
-    <Compile Include="Controllers\PayPalsController.cs" />
+    <Compile Include="Controllers\PayPalController.cs" />
     <Compile Include="Controllers\ShopsController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Models\Feedback.cs">
@@ -243,6 +243,7 @@
     <Compile Include="Models\Order.cs">
       <DependentUpon>G3EntitiesModel1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\PDTHolder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Models\Shop.cs">
       <DependentUpon>G3EntitiesModel1.tt</DependentUpon>
@@ -375,6 +376,9 @@
     <Content Include="Views\EditCalendar\Index.cshtml" />
     <Content Include="Views\Home\Index1.cshtml" />
     <Content Include="Views\gmap\gmap.cshtml" />
+    <Content Include="Views\Orders\DisplayCustomerOrder.cshtml" />
+    <Content Include="Views\PayPal\Index.cshtml" />
+    <Content Include="Views\PayPal\Success.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
@@ -392,9 +396,7 @@
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Views\PayPals\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
