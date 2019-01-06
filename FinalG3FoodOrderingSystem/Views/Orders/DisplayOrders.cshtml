@@ -49,6 +49,7 @@
 
                 @Html.ActionLink("Accept to Deliver", "ReadytoServe", new { id = item.Id }) |
                 @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                @Html.ActionLink("Delivery Address", "gmap", "gmap") 
             </td>
         </tr>
     }
