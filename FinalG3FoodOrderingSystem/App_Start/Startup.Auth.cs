@@ -54,15 +54,15 @@ namespace FinalG3FoodOrderingSystem
             //   consumerKey: "",
             //   consumerSecret: "");
 
-            //app.UseFacebookAuthentication(
-            //   appId: "",
-            //   appSecret: "");
+            app.UseFacebookAuthentication(
+             appId: "212475656179386",
+             appSecret: "7d0c69cb39c1c253b92671a59e54209e");
 
-            //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
-            //{
-            //    ClientId = "",
-            //    ClientSecret = ""
-            //});
+            app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
+            {
+                ClientId = "561012826517-9nacnl9u7g7h8lbgahnsl5880q134fsv.apps.googleusercontent.com",
+                ClientSecret = "h-N-tdIKuawZVwZGdZreIuwJ"
+            });
         }
     }
 }
