@@ -12,7 +12,7 @@ namespace FinalG3FoodOrderingSystem.Controllers
 {
     public class FoodsController : Controller
     {
-        private FoodOrderingSystemDatabaseEntities6 db = new FoodOrderingSystemDatabaseEntities6();
+        private FoodOrderingSystemDatabaseEntities7 db = new FoodOrderingSystemDatabaseEntities7();
 
         // GET: Foods
         public ActionResult Index()

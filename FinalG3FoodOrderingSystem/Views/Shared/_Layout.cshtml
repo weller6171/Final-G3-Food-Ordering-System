@@ -11,9 +11,9 @@
 <body>
     @{
         Html.RenderPartial("_HeaderNavBar");
-     }
-        
-    
+    }
+
+
     <div class="container body-content">
         @RenderBody()
         <hr />
@@ -24,6 +24,6 @@
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
+    @RenderSection("Scripts", false)
 </body>
 </html>

@@ -27,8 +27,8 @@ namespace FinalG3FoodOrderingSystem.Models
         public int ShopId { get; set; }
         public Nullable<int> Quantity { get; set; }
     
-        public virtual Shop Shop { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Order> Orders { get; set; }
+        public virtual Shop Shop { get; set; }
     }
 }

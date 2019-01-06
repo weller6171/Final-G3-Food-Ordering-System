@@ -13,10 +13,10 @@ namespace FinalG3FoodOrderingSystem.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class FoodOrderingSystemDatabaseEntities6 : DbContext
+    public partial class FoodOrderingSystemDatabaseEntities7 : DbContext
     {
-        public FoodOrderingSystemDatabaseEntities6()
-            : base("name=FoodOrderingSystemDatabaseEntities6")
+        public FoodOrderingSystemDatabaseEntities7()
+            : base("name=FoodOrderingSystemDatabaseEntities7")
         {
         }
     
@@ -25,10 +25,11 @@ namespace FinalG3FoodOrderingSystem.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Food> Foods { get; set; }
-        public virtual DbSet<Shop> Shops { get; set; }
-        public virtual DbSet<User> Users { get; set; }
-        public virtual DbSet<Order> Orders { get; set; }
         public virtual DbSet<Feedback> Feedbacks { get; set; }
+        public virtual DbSet<Food> Foods { get; set; }
+        public virtual DbSet<Order> Orders { get; set; }
+        public virtual DbSet<Shop> Shops { get; set; }
+        public virtual DbSet<Table> Tables { get; set; }
+        public virtual DbSet<User> Users { get; set; }
     }
 }

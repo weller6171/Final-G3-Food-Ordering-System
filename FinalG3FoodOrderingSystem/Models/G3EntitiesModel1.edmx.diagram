@@ -4,18 +4,19 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="364ef17e43cf4feab89717fa53a88340" Name="Diagram1">
-        <EntityTypeShape EntityType="FoodOrderingSystemDatabaseModel.Food" Width="1.5" PointX="5.25" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="FoodOrderingSystemDatabaseModel.Shop" Width="1.5" PointX="3" PointY="1.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="FoodOrderingSystemDatabaseModel.User" Width="1.5" PointX="0.75" PointY="1" IsExpanded="true" />
+      <Diagram DiagramId="2cdb59e816fa442195bb32376de2f49d" Name="Diagram1">
+        <EntityTypeShape EntityType="FoodOrderingSystemDatabaseModel.Feedback" Width="1.5" PointX="5.25" PointY="7.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="FoodOrderingSystemDatabaseModel.Food" Width="1.5" PointX="5.25" PointY="9.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="FoodOrderingSystemDatabaseModel.Order" Width="1.5" PointX="7.5" PointY="6.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="FoodOrderingSystemDatabaseModel.Shop" Width="1.5" PointX="3" PointY="8.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="FoodOrderingSystemDatabaseModel.Table" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FoodOrderingSystemDatabaseModel.User" Width="1.5" PointX="0.75" PointY="4.625" IsExpanded="true" />
+        <AssociationConnector Association="FoodOrderingSystemDatabaseModel.FK_Feedbacks_ToShops" ManuallyRouted="false" />
+        <AssociationConnector Association="FoodOrderingSystemDatabaseModel.FK_Orders_ToFoods" ManuallyRouted="false" />
         <AssociationConnector Association="FoodOrderingSystemDatabaseModel.FK_Table_ToShops" ManuallyRouted="false" />
+        <AssociationConnector Association="FoodOrderingSystemDatabaseModel.FK_Orders_ToShops" ManuallyRouted="false" />
+        <AssociationConnector Association="FoodOrderingSystemDatabaseModel.FK_Orders_ToUsers" ManuallyRouted="false" />
         <AssociationConnector Association="FoodOrderingSystemDatabaseModel.FK_Shops_ToTable" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="FoodOrderingSystemDatabaseModel.Order" Width="1.5" PointX="7.5" PointY="0.875" />
-        <AssociationConnector Association="FoodOrderingSystemDatabaseModel.FK_Orders_ToFoods" />
-        <AssociationConnector Association="FoodOrderingSystemDatabaseModel.FK_Orders_ToShops" />
-        <AssociationConnector Association="FoodOrderingSystemDatabaseModel.FK_Orders_ToUsers" />
-        <EntityTypeShape EntityType="FoodOrderingSystemDatabaseModel.Feedback" Width="1.5" PointX="1.625" PointY="4.25" />
-        <AssociationConnector Association="FoodOrderingSystemDatabaseModel.FK_Feedbacks_ToShops" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
