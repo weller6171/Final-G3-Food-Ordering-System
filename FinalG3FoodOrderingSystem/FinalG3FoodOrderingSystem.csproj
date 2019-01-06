@@ -280,6 +280,7 @@
     <Content Include="Models\G3EntitiesModel1.edmx.diagram">
       <DependentUpon>G3EntitiesModel1.edmx</DependentUpon>
     </Content>
+    <None Include="Properties\PublishProfiles\G3Profile.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
