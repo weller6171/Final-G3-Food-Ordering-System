@@ -15,7 +15,7 @@ namespace FinalG3FoodOrderingSystem.Controllers
 {
     public class UsersController : Controller
     {
-        private FoodOrderingSystemDatabaseEntities6 db = new FoodOrderingSystemDatabaseEntities6();
+        private FoodOrderingSystemDatabaseEntities7 db = new FoodOrderingSystemDatabaseEntities7();
 
 
 
@@ -30,7 +30,7 @@ namespace FinalG3FoodOrderingSystem.Controllers
         [HttpPost]
         public ActionResult Authorize(FinalG3FoodOrderingSystem.Models.User user)
         {
-            using (FoodOrderingSystemDatabaseEntities6 database1Entities = new FoodOrderingSystemDatabaseEntities6())
+            using (FoodOrderingSystemDatabaseEntities7 database1Entities = new FoodOrderingSystemDatabaseEntities7())
             {
                 var userDetails = database1Entities.Users.Where(x => x.emailAddress == user.emailAddress && x.password == user.password).FirstOrDefault();
                 if (userDetails == null)

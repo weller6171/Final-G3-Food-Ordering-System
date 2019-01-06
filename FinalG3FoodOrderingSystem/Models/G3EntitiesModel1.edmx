@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="FoodOrderingSystemDatabaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="FoodOrderingSystemDatabaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Feedbacks">
           <Key>
             <PropertyRef Name="Id" />
@@ -36,6 +36,7 @@
           <Property Name="TotalPrice" Type="float" Nullable="false" />
           <Property Name="Status" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="ShopId" Type="int" Nullable="false" />
+          <Property Name="Address" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="Shops">
           <Key>
@@ -45,6 +46,18 @@
           <Property Name="ShopName" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="ShopOwner" Type="int" Nullable="false" />
           <Property Name="ShopAddress" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Table">
+          <Key>
+            <PropertyRef Name="EventID" />
+          </Key>
+          <Property Name="EventID" Type="int" Nullable="false" />
+          <Property Name="Subject" Type="varchar" MaxLength="50" />
+          <Property Name="Description" Type="varchar" MaxLength="500" />
+          <Property Name="Start" Type="datetime" />
+          <Property Name="End" Type="datetime" />
+          <Property Name="ThemeColor" Type="varchar" MaxLength="50" />
+          <Property Name="IsFullDay" Type="bit" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
@@ -134,6 +147,7 @@
           <EntitySet Name="Foods" EntityType="Self.Foods" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Shops" EntityType="Self.Shops" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Table" EntityType="Self.Table" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Feedbacks_ToShops" Association="Self.FK_Feedbacks_ToShops">
             <End Role="Shops" EntitySet="Shops" />
@@ -160,10 +174,21 @@
             <End Role="Foods" EntitySet="Foods" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="FoodOrderingSystemDatabaseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Feedback">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ShopId" Type="Int32" Nullable="false" />
+          <Property Name="message" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="rating" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Shop" Relationship="Self.FK_Feedbacks_ToShops" FromRole="Feedbacks" ToRole="Shops" />
+        </EntityType>
         <EntityType Name="Food">
           <Key>
             <PropertyRef Name="Id" />
@@ -174,8 +199,24 @@
           <Property Name="Price" Type="Double" Nullable="false" />
           <Property Name="ShopId" Type="Int32" Nullable="false" />
           <Property Name="Quantity" Type="Int32" />
+          <NavigationProperty Name="Orders" Relationship="Self.FK_Orders_ToFoods" FromRole="Foods" ToRole="Orders" />
           <NavigationProperty Name="Shop" Relationship="Self.FK_Table_ToShops" FromRole="Foods" ToRole="Shops" />
-          <NavigationProperty Name="Orders" Relationship="FoodOrderingSystemDatabaseModel.FK_Orders_ToFoods" FromRole="Food" ToRole="Order" />
+        </EntityType>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CustomerId" Type="Int32" Nullable="false" />
+          <Property Name="FoodId" Type="Int32" Nullable="false" />
+          <Property Name="Quantity" Type="Int32" Nullable="false" />
+          <Property Name="TotalPrice" Type="Double" Nullable="false" />
+          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ShopId" Type="Int32" Nullable="false" />
+          <Property Name="Address" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Food" Relationship="Self.FK_Orders_ToFoods" FromRole="Orders" ToRole="Foods" />
+          <NavigationProperty Name="Shop" Relationship="Self.FK_Orders_ToShops" FromRole="Orders" ToRole="Shops" />
+          <NavigationProperty Name="User" Relationship="Self.FK_Orders_ToUsers" FromRole="Orders" ToRole="Users" />
         </EntityType>
         <EntityType Name="Shop">
           <Key>
@@ -185,10 +226,22 @@
           <Property Name="ShopName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="ShopOwner" Type="Int32" Nullable="false" />
           <Property Name="ShopAddress" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Feedbacks" Relationship="Self.FK_Feedbacks_ToShops" FromRole="Shops" ToRole="Feedbacks" />
           <NavigationProperty Name="Foods" Relationship="Self.FK_Table_ToShops" FromRole="Shops" ToRole="Foods" />
+          <NavigationProperty Name="Orders" Relationship="Self.FK_Orders_ToShops" FromRole="Shops" ToRole="Orders" />
           <NavigationProperty Name="User" Relationship="Self.FK_Shops_ToTable" FromRole="Shops" ToRole="Users" />
-          <NavigationProperty Name="Orders" Relationship="FoodOrderingSystemDatabaseModel.FK_Orders_ToShops" FromRole="Shop" ToRole="Order" />
-          <NavigationProperty Name="Feedbacks" Relationship="FoodOrderingSystemDatabaseModel.FK_Feedbacks_ToShops" FromRole="Shop" ToRole="Feedback" />
+        </EntityType>
+        <EntityType Name="Table">
+          <Key>
+            <PropertyRef Name="EventID" />
+          </Key>
+          <Property Name="EventID" Type="Int32" Nullable="false" />
+          <Property Name="Subject" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Start" Type="DateTime" Precision="3" />
+          <Property Name="End" Type="DateTime" Precision="3" />
+          <Property Name="ThemeColor" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IsFullDay" Type="Boolean" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -200,9 +253,33 @@
           <Property Name="emailAddress" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="hpno" Type="Int32" Nullable="false" />
           <Property Name="position" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Orders" Relationship="Self.FK_Orders_ToUsers" FromRole="Users" ToRole="Orders" />
           <NavigationProperty Name="Shops" Relationship="Self.FK_Shops_ToTable" FromRole="Users" ToRole="Shops" />
-          <NavigationProperty Name="Orders" Relationship="FoodOrderingSystemDatabaseModel.FK_Orders_ToUsers" FromRole="User" ToRole="Order" />
         </EntityType>
+        <Association Name="FK_Feedbacks_ToShops">
+          <End Role="Shops" Type="Self.Shop" Multiplicity="1" />
+          <End Role="Feedbacks" Type="Self.Feedback" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Shops">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Feedbacks">
+              <PropertyRef Name="ShopId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Orders_ToFoods">
+          <End Role="Foods" Type="Self.Food" Multiplicity="1" />
+          <End Role="Orders" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Foods">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="FoodId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Table_ToShops">
           <End Role="Shops" Type="Self.Shop" Multiplicity="1" />
           <End Role="Foods" Type="Self.Food" Multiplicity="*" />
@@ -212,6 +289,30 @@
             </Principal>
             <Dependent Role="Foods">
               <PropertyRef Name="ShopId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Orders_ToShops">
+          <End Role="Shops" Type="Self.Shop" Multiplicity="1" />
+          <End Role="Orders" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Shops">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="ShopId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Orders_ToUsers">
+          <End Role="Users" Type="Self.User" Multiplicity="1" />
+          <End Role="Orders" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="CustomerId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -227,116 +328,54 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="FoodOrderingSystemDatabaseEntities6" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="FoodOrderingSystemDatabaseEntities7" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Feedbacks" EntityType="Self.Feedback" />
           <EntitySet Name="Foods" EntityType="Self.Food" />
+          <EntitySet Name="Orders" EntityType="Self.Order" />
           <EntitySet Name="Shops" EntityType="Self.Shop" />
+          <EntitySet Name="Tables" EntityType="Self.Table" />
           <EntitySet Name="Users" EntityType="Self.User" />
+          <AssociationSet Name="FK_Feedbacks_ToShops" Association="Self.FK_Feedbacks_ToShops">
+            <End Role="Shops" EntitySet="Shops" />
+            <End Role="Feedbacks" EntitySet="Feedbacks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Orders_ToFoods" Association="Self.FK_Orders_ToFoods">
+            <End Role="Foods" EntitySet="Foods" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
           <AssociationSet Name="FK_Table_ToShops" Association="Self.FK_Table_ToShops">
             <End Role="Shops" EntitySet="Shops" />
             <End Role="Foods" EntitySet="Foods" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Orders_ToShops" Association="Self.FK_Orders_ToShops">
+            <End Role="Shops" EntitySet="Shops" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Orders_ToUsers" Association="Self.FK_Orders_ToUsers">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Orders" EntitySet="Orders" />
           </AssociationSet>
           <AssociationSet Name="FK_Shops_ToTable" Association="Self.FK_Shops_ToTable">
             <End Role="Users" EntitySet="Users" />
             <End Role="Shops" EntitySet="Shops" />
           </AssociationSet>
-          <EntitySet Name="Orders" EntityType="FoodOrderingSystemDatabaseModel.Order" />
-          <AssociationSet Name="FK_Orders_ToFoods" Association="FoodOrderingSystemDatabaseModel.FK_Orders_ToFoods">
-            <End Role="Food" EntitySet="Foods" />
-            <End Role="Order" EntitySet="Orders" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Orders_ToShops" Association="FoodOrderingSystemDatabaseModel.FK_Orders_ToShops">
-            <End Role="Shop" EntitySet="Shops" />
-            <End Role="Order" EntitySet="Orders" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Orders_ToUsers" Association="FoodOrderingSystemDatabaseModel.FK_Orders_ToUsers">
-            <End Role="User" EntitySet="Users" />
-            <End Role="Order" EntitySet="Orders" />
-          </AssociationSet>
-          <EntitySet Name="Feedbacks" EntityType="FoodOrderingSystemDatabaseModel.Feedback" />
-          <AssociationSet Name="FK_Feedbacks_ToShops" Association="FoodOrderingSystemDatabaseModel.FK_Feedbacks_ToShops">
-            <End Role="Shop" EntitySet="Shops" />
-            <End Role="Feedback" EntitySet="Feedbacks" />
-          </AssociationSet>
         </EntityContainer>
-        <EntityType Name="Order">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="CustomerId" Type="Int32" Nullable="false" />
-          <Property Name="FoodId" Type="Int32" Nullable="false" />
-          <Property Name="Quantity" Type="Int32" Nullable="false" />
-          <Property Name="TotalPrice" Type="Double" Nullable="false" />
-          <Property Name="Status" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="ShopId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Food" Relationship="FoodOrderingSystemDatabaseModel.FK_Orders_ToFoods" FromRole="Order" ToRole="Food" />
-          <NavigationProperty Name="Shop" Relationship="FoodOrderingSystemDatabaseModel.FK_Orders_ToShops" FromRole="Order" ToRole="Shop" />
-          <NavigationProperty Name="User" Relationship="FoodOrderingSystemDatabaseModel.FK_Orders_ToUsers" FromRole="Order" ToRole="User" />
-        </EntityType>
-        <Association Name="FK_Orders_ToFoods">
-          <End Type="FoodOrderingSystemDatabaseModel.Food" Role="Food" Multiplicity="1" />
-          <End Type="FoodOrderingSystemDatabaseModel.Order" Role="Order" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Food">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Order">
-              <PropertyRef Name="FoodId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Orders_ToShops">
-          <End Type="FoodOrderingSystemDatabaseModel.Shop" Role="Shop" Multiplicity="1" />
-          <End Type="FoodOrderingSystemDatabaseModel.Order" Role="Order" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Shop">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Order">
-              <PropertyRef Name="ShopId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Orders_ToUsers">
-          <End Type="FoodOrderingSystemDatabaseModel.User" Role="User" Multiplicity="1" />
-          <End Type="FoodOrderingSystemDatabaseModel.Order" Role="Order" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="User">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Order">
-              <PropertyRef Name="CustomerId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="Feedback">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="message" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="rating" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="ShopId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Shop" Relationship="FoodOrderingSystemDatabaseModel.FK_Feedbacks_ToShops" FromRole="Feedback" ToRole="Shop" />
-        </EntityType>
-        <Association Name="FK_Feedbacks_ToShops">
-          <End Type="FoodOrderingSystemDatabaseModel.Shop" Role="Shop" Multiplicity="1" />
-          <End Type="FoodOrderingSystemDatabaseModel.Feedback" Role="Feedback" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Shop">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Feedback">
-              <PropertyRef Name="ShopId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="FoodOrderingSystemDatabaseModelStoreContainer" CdmEntityContainer="FoodOrderingSystemDatabaseEntities6">
+        <EntityContainerMapping StorageEntityContainer="FoodOrderingSystemDatabaseModelStoreContainer" CdmEntityContainer="FoodOrderingSystemDatabaseEntities7">
+          <EntitySetMapping Name="Feedbacks">
+            <EntityTypeMapping TypeName="FoodOrderingSystemDatabaseModel.Feedback">
+              <MappingFragment StoreEntitySet="Feedbacks">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ShopId" ColumnName="ShopId" />
+                <ScalarProperty Name="message" ColumnName="message" />
+                <ScalarProperty Name="rating" ColumnName="rating" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Foods">
             <EntityTypeMapping TypeName="FoodOrderingSystemDatabaseModel.Food">
               <MappingFragment StoreEntitySet="Foods">
@@ -346,6 +385,20 @@
                 <ScalarProperty Name="Price" ColumnName="Price" />
                 <ScalarProperty Name="ShopId" ColumnName="ShopId" />
                 <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Orders">
+            <EntityTypeMapping TypeName="FoodOrderingSystemDatabaseModel.Order">
+              <MappingFragment StoreEntitySet="Orders">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+                <ScalarProperty Name="FoodId" ColumnName="FoodId" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="ShopId" ColumnName="ShopId" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -359,6 +412,19 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Tables">
+            <EntityTypeMapping TypeName="FoodOrderingSystemDatabaseModel.Table">
+              <MappingFragment StoreEntitySet="Table">
+                <ScalarProperty Name="EventID" ColumnName="EventID" />
+                <ScalarProperty Name="Subject" ColumnName="Subject" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Start" ColumnName="Start" />
+                <ScalarProperty Name="End" ColumnName="End" />
+                <ScalarProperty Name="ThemeColor" ColumnName="ThemeColor" />
+                <ScalarProperty Name="IsFullDay" ColumnName="IsFullDay" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="FoodOrderingSystemDatabaseModel.User">
               <MappingFragment StoreEntitySet="Users">
@@ -368,29 +434,6 @@
                 <ScalarProperty Name="emailAddress" ColumnName="emailAddress" />
                 <ScalarProperty Name="hpno" ColumnName="hpno" />
                 <ScalarProperty Name="position" ColumnName="position" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Orders">
-            <EntityTypeMapping TypeName="FoodOrderingSystemDatabaseModel.Order">
-              <MappingFragment StoreEntitySet="Orders">
-                <ScalarProperty Name="ShopId" ColumnName="ShopId" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
-                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
-                <ScalarProperty Name="FoodId" ColumnName="FoodId" />
-                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Feedbacks">
-            <EntityTypeMapping TypeName="FoodOrderingSystemDatabaseModel.Feedback">
-              <MappingFragment StoreEntitySet="Feedbacks">
-                <ScalarProperty Name="ShopId" ColumnName="ShopId" />
-                <ScalarProperty Name="rating" ColumnName="rating" />
-                <ScalarProperty Name="message" ColumnName="message" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

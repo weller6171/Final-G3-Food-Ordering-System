@@ -6,40 +6,31 @@
 //     Manual changes to this file will be overwritten if the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-using System.ComponentModel.DataAnnotations;
+
 namespace FinalG3FoodOrderingSystem.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel;
-
+    
     public partial class User
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public User()
         {
-            this.Shops = new HashSet<Shop>();
             this.Orders = new HashSet<Order>();
+            this.Shops = new HashSet<Shop>();
         }
-
+    
         public int Id { get; set; }
-        [DisplayName("Password ")]
-        [DataType(DataType.Password)]
         public string password { get; set; }
-
-        [DisplayName("Name ")]
         public string name { get; set; }
-        [DisplayName("E-mail  ")]
-        [DataType(DataType.EmailAddress)]
         public string emailAddress { get; set; }
-        [DisplayName("HP No  ")]
-        [DataType(DataType.PhoneNumber)]
         public int hpno { get; set; }
         public string position { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Shop> Shops { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Order> Orders { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Shop> Shops { get; set; }
     }
 }

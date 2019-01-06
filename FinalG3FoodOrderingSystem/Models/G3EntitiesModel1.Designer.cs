@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'C:\Users\weller\source\repos\FinalG3FoodOrderingSystem\FinalG3FoodOrderingSystem\Models\G3EntitiesModel1.edmx'. 
+﻿// T4 code generation is enabled for model 'C:\Users\USER\Source\Repos\weller6171\Final-G3-Food-Ordering-System\FinalG3FoodOrderingSystem\Models\G3EntitiesModel1.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.

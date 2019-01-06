@@ -21,6 +21,7 @@ namespace FinalG3FoodOrderingSystem.Models
         public double TotalPrice { get; set; }
         public string Status { get; set; }
         public int ShopId { get; set; }
+        public string Address { get; set; }
     
         public virtual Food Food { get; set; }
         public virtual Shop Shop { get; set; }

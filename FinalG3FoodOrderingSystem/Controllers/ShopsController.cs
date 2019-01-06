@@ -15,7 +15,7 @@ namespace FinalG3FoodOrderingSystem.Controllers
 {
     public class ShopsController : Controller
     {
-        private FoodOrderingSystemDatabaseEntities6 db = new FoodOrderingSystemDatabaseEntities6();
+        private FoodOrderingSystemDatabaseEntities7 db = new FoodOrderingSystemDatabaseEntities7();
 
         // GET: ProductDetails2
         public ActionResult Index()

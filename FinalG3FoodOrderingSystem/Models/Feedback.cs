@@ -15,9 +15,9 @@ namespace FinalG3FoodOrderingSystem.Models
     public partial class Feedback
     {
         public int Id { get; set; }
+        public int ShopId { get; set; }
         public string message { get; set; }
         public string rating { get; set; }
-        public int ShopId { get; set; }
     
         public virtual Shop Shop { get; set; }
     }
